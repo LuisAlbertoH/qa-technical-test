@@ -1,1 +1,1 @@
-# qa-technical-test
+# Prueba técnica QA Engineer
