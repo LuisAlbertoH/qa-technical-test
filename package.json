@@ -1,0 +1,12 @@
+{
+  "name": "qa-orangehrm-chatbot",
+  "version": "1.0.0",
+  "description": "Prueba técnica QA Engineer con Cypress",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "devDependencies": {
+    "cypress": "^13.0.0",
+    "cypress-iframe": "^1.0.1"
+  }
+}
