@@ -7,7 +7,6 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
 
-    # If you need a matrix of Node versions, swap this for a matrix strategy
     steps:
       - uses: actions/checkout@v4
 
