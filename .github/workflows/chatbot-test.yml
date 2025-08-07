@@ -42,5 +42,5 @@ jobs:
         with:
           name: cypress-videos
           path: |
-            '/home/runner/work/qa-technical-test/qa-technical-test/cypress/videos/**.mp4'
+            '/home/runner/work/qa-technical-test/qa-technical-test/cypress/videos/estrellablancachatbot.cy.js.mp4'
           retention-days: 7          # adjust if you want to keep it longer
