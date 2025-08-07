@@ -1,14 +1,38 @@
-name: Ejecutar manualmente
+name: Interact with Estrella Blanca Chatbot
 
 on:
   workflow_dispatch:
 
 jobs:
-  build:
+  cypress-run:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout del repositorio
-        uses: actions/checkout@v3
 
-      - name: Mostrar mensaje
-        run: echo "Este workflow se ejecutó manualmente"
+    # If you need a matrix of Node versions, swap this for a matrix strategy
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm          # speeds up subsequent runs
+
+      - name: Install NPM packages
+        run: npm ci
+
+      - name: Run Cypress (specific spec, record video)
+        uses: cypress-io/github-action@v6
+        with:
+          spec: cypress/e2e/estrellablancachatbot.cy.js
+          record: false
+        env:
+          # Cypress treats any CI env var as “CI mode” (no interactive GUI)
+          CI: true
+
+      - name: Upload Cypress video artifact
+        if: always()          # ensures this runs on success *or* failure
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-videos
+          path: |
+            cypress/videos/**.mp4    # default output folder
+          retention-days: 7          # adjust if you want to keep it longer
