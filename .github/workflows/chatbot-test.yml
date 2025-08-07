@@ -22,7 +22,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           spec: cypress/e2e/estrellablancachatbot.cy.js
-          record: false
+          record: true
         env:
           # Cypress treats any CI env var as “CI mode” (no interactive GUI)
           CI: true
@@ -33,7 +33,7 @@ jobs:
         with:
           name: cypress-screenshots
           path: |
-            '/home/runner/work/qa-technical-test/qa-technical-test/cypress/screenshots/estrellablancachatbot.cy.js/*'
+            'cypress/screenshots/estrellablancachatbot.cy.js/*'
           retention-days: 7
           
       - name: Upload Cypress video artifact
@@ -42,5 +42,5 @@ jobs:
         with:
           name: cypress-videos
           path: |
-            '/home/runner/work/qa-technical-test/qa-technical-test/cypress/videos/estrellablancachatbot.cy.js.mp4'
+            'cypress/videos/estrellablancachatbot.cy.js.mp4'
           retention-days: 7          # adjust if you want to keep it longer
