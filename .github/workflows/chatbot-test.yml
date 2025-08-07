@@ -22,10 +22,10 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           spec: cypress/e2e/estrellablancachatbot.cy.js
-          record: true
-        env:
+          record: false
+        #env:
           # Cypress treats any CI env var as “CI mode” (no interactive GUI)
-          CI: true
+          #CI: true
           
       - name: Upload Cypress screenshots artifact
         if: always()
