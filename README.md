@@ -3,19 +3,18 @@
 ## 🔧 Tecnologías
 - Cypress
 - JavaScript
-- Git / GitHub
+- Git / GitHub / GitHub Actions
 
 ## 📁 Estructura
 
 - `/cypress/e2e`: Casos de prueba para OrangeHRM y Chatbot
 - `/cypress/support`: Comandos personalizados
-- `/cypress/fixtures`: Datos simulados
 
 ## ▶️ Instalación
 
 ```bash
-git clone https://github.com/tuusuario/qa-orangehrm-chatbot.git
-cd qa-orangehrm-chatbot
+git clone https://github.com/LuisAlbertoH/qa-technical-test.git
+cd qa-technical-test
 npm install
 ```
 
@@ -29,12 +28,15 @@ Selecciona los archivos:
 - `orangehrm.cy.js`
 - `chatbot.cy.js`
 
-## 📌 Notas
+## 📡 Ejecución remota con GitHub Actions
 
-- La prueba del chatbot usa interacciones con `iframe`. Dependiendo del tiempo de carga, podrías usar `cy.wait()` estratégicamente.
-- Las credenciales válidas para OrangeHRM demo son:
-  - Usuario: `Admin`
-  - Contraseña: `admin123`
+Este repositorio cuenta con una configuración de GitHub Actions que se puede ejecutar de manera manual y remota sin necesidad de ejecutarlo localmente.
+En cada ejecución del workflow podrás:
+- Revisar el log de cada prueba ejecutada.
+- Descargar como attachments los videos de la ejecución.
+- Descargar como attachments las capturas de pantalla tomadas durante las pruebas.
+
+Para ejecutar el workflow ve a la seccion de Actions da click en el workflow en el costado izquierdo y selecciona la opcion de Run Workflow del lado izquierdo [Acceso directo](https://github.com/LuisAlbertoH/qa-technical-test/actions/workflows/chatbot-test.yml)
 
 ## ✍️ Autor
 Luis Alberto Hernández Córdova
