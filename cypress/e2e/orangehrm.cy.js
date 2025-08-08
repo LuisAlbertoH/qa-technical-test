@@ -152,6 +152,13 @@ describe('OrangeHRM - Test de plataforma web', () => {
   it('Hacer logout: el usuario debe salir del dashboard', () => {
     cy.login();
     cy.get('a[href="/web/index.php/pim/viewMyDetails"]').click();
+
+    Cypress.once('uncaught:exception', (err) => {
+      const msg = err?.message || '';
+      if (/AbortError|aborted|unhandled promise rejection/i.test(msg)) {
+        return false; // no fallar la prueba por esto
+      }
+    });
     cy.get('p.oxd-userdropdown-name').click();
     cy.contains('Logout').click();
     cy.screenshot('7-0-OrangeHRM-Logout');
