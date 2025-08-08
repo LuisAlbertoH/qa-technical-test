@@ -14,7 +14,7 @@ describe('Interact with Estrella Blanca Chatbot', () => {
 
   it('should interact with the chatbot in the iframe', () => {
     
-    //cy.wait(1000); // Giving time for adds to appear
+    cy.wait(50000); // Giving time for adds to appear
     cy.get('div[id="wps-overlay-close-button"]', { timeout: 50000 }).click()
     cy.log('Closed Initial Adds')
 
