@@ -5,7 +5,7 @@ on:
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v4
@@ -24,6 +24,7 @@ jobs:
           spec: cypress/e2e/estrellablancachatbot.cy.js
           record: false
           browser: chrome
+          headed: true
         #env:
           # Cypress treats any CI env var as “CI mode” (no interactive GUI)
           #CI: true
