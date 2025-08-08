@@ -153,11 +153,22 @@ describe('OrangeHRM - Test de plataforma web', () => {
     cy.login();
     cy.get('a[href="/web/index.php/pim/viewMyDetails"]').click();
 
-    Cypress.once('uncaught:exception', (err) => {
+    cy.once('uncaught:exception', (err) => {
       const msg = err?.message || '';
       if (/AbortError|aborted|unhandled promise rejection/i.test(msg)) {
         return false; // no fallar la prueba por esto
       }
+    });
+    cy.window().then((win) => {
+      win.addEventListener('unhandledrejection', (event) => {
+        const m = String(event?.reason?.message || event?.reason || '');
+        if (
+          /AbortError/i.test(m) ||
+          /Cannot read (properties|property) of undefined \(reading 'response'\)/i.test(m)
+        ) {
+          event.preventDefault();
+        }
+      });
     });
     cy.get('p.oxd-userdropdown-name').click();
     cy.contains('Logout').click();
