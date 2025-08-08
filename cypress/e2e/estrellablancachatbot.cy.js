@@ -26,7 +26,7 @@ describe('Interact with Estrella Blanca Chatbot', () => {
     });
 
     //Activating the chatbot window
-    cy.get('iframe[id="botlers-messaging-button-iframe"]', { timeout: 20000 }).its('0.contentWindow.document').should('exist')
+    cy.get('iframe[id="botlers-messaging-button-iframe"]', { timeout: 50000 }).its('0.contentWindow.document').should('exist')
         .then((chatbotIconIframeDoc) => {
           console.log('Chatbot Icon contentWindow Document:', chatbotIconIframeDoc);
 
@@ -37,7 +37,7 @@ describe('Interact with Estrella Blanca Chatbot', () => {
     );
 
     //Interacting with the chatbot window
-    cy.get('iframe[src*="https://widget.botlers.io/window/index.html?v=220"]', { timeout: 20000 }).its('0.contentWindow.document').should('exist')
+    cy.get('iframe[src*="https://widget.botlers.io/window/index.html?v=220"]', { timeout: 50000 }).its('0.contentWindow.document').should('exist')
         .then((chatbotMessagesIframeDoc) => {
           console.log('Chatbot Messages contentWindow Document:', chatbotMessagesIframeDoc);
           
