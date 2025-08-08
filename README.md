@@ -36,7 +36,7 @@ En cada ejecución del workflow podrás:
 - Descargar como attachments los videos de la ejecución.
 - Descargar como attachments las capturas de pantalla tomadas durante las pruebas.
 
-Para ejecutar el workflow ve a la seccion de Actions da click en el workflow en el costado izquierdo y selecciona la opcion de Run Workflow del lado izquierdo [Acceso directo](https://github.com/LuisAlbertoH/qa-technical-test/actions/workflows/chatbot-test.yml)
+Para ejecutar el workflow ve a la seccion de Actions da click en el workflow en el costado izquierdo y selecciona la opcion de **Run Workflow** del lado izquierdo [Acceso directo](https://github.com/LuisAlbertoH/qa-technical-test/actions/workflows/chatbot-test.yml)
 
 ## ✍️ Autor
 Luis Alberto Hernández Córdova
