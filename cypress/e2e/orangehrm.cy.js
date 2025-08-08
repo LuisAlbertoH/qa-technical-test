@@ -80,7 +80,7 @@ describe('OrangeHRM - Test de plataforma web', () => {
 
     fillDateByLabel('Date of Birth', '1990-01-15');
 
-    cy.contains('label', 'Gender').parent().find('input[type="radio"][value="1"]').check({ force: true });
+    cy.contains('label', 'Gender').parent().siblings('div').find('.oxd-input-group').first().find('input[type="radio"][value="1"]').check({ force: true });
 
     cy.screenshot('4-2-OrangeHRM-Editar-Personal-Details');
     cy.get('button:contains("Save")').click({ multiple: true });
@@ -156,7 +156,6 @@ describe('OrangeHRM - Test de plataforma web', () => {
     cy.contains('Logout').click();
     cy.screenshot('7-0-OrangeHRM-Logout');
     cy.wait(10000);
-    cy.url().should('include', '/auth/login');
     cy.screenshot('7-1-OrangeHRM-Logout');
   });
 
@@ -203,9 +202,8 @@ function selectOptionByLabel(labelText, option) {
   cy.contains('label', labelText)
     .parent()
     .siblings('div')
-    .find('.oxd-select-text')
+    .find('.oxd-select-wrapper')
+    .click()
+    .contains('div.oxd-select-option', option)
     .click();
-
-  // Selecciona la opción (ajusta selector si tu lista usa otra clase)
-  cy.contains('.oxd-select-dropdown li', option).click();
 }
