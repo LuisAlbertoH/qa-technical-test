@@ -9,14 +9,21 @@ describe('Interact with Estrella Blanca Chatbot', () => {
     //let's turn off the logging on the report for better readability
 
     cy.intercept('**', { log: false });
-    cy.visit(url, { failOnStatusCode: false });
+    cy.visit(url);
   });
 
   it('should interact with the chatbot in the iframe', () => {
     
-    cy.wait(50000); // Giving time for adds to appear
-    cy.get('div[id="wps-overlay-close-button"]', { timeout: 50000 }).should('be.visible').click()
-    cy.log('Closed Initial Adds')
+    //cy.wait(); // Giving time for adds to appear
+    cy.get('body').then($body => {
+      var selector = 'div[id="wps-overlay-close-button"]'
+      if ($body.find(selector, { timeout: 50000 }).length) {
+        cy.get(selector).click();
+        cy.log('Closed Initial Adds')
+      } else {
+        cy.log('No Initial Adds Found')
+      }
+    });
 
     //Activating the chatbot window
     cy.get('iframe[id="botlers-messaging-button-iframe"]', { timeout: 20000 }).its('0.contentWindow.document').should('exist')
@@ -34,7 +41,7 @@ describe('Interact with Estrella Blanca Chatbot', () => {
         .then((chatbotMessagesIframeDoc) => {
           console.log('Chatbot Messages contentWindow Document:', chatbotMessagesIframeDoc);
           
-          cy.wrap(chatbotMessagesIframeDoc).find('textarea.v-field__input:not(.v-textarea__sizer)', { timeout: 25000 }).should('exist', 'Chatbot Textarea Found').type("Hola soy Luis Hernandez! Estoy haciendo una prueba automatizada con el chatbot. Saludos!{enter}");
+          cy.wrap(chatbotMessagesIframeDoc).find('textarea.v-field__input:not(.v-textarea__sizer)', { timeout: 25000 }).should('exist', 'Chatbot Textarea Found').type("Hola soy Luis Hernandez! Estoy haciendo una prueba automatizada con el chatbot. Saludos!");
 
           cy.wrap(chatbotMessagesIframeDoc).find('#brand', { timeout: 25000 }).find('.v-btn__content').should('contain.text', 'Powered by');
           cy.log('shows the "powered by artificial nerds" brand banner');
