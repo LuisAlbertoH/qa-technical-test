@@ -8,7 +8,9 @@ module.exports = defineConfig({
 	experimentalModifyObstructiveThirdPartyCode: true,
   e2e: {
     baseUrl: "https://opensource-demo.orangehrmlive.com",
-    supportFile: "cypress/support/e2e.js"
+    supportFile: "cypress/support/e2e.js",
+	video: true,
+	screenshotOnRunFailure: true
   }, 
   retries: {
           runMode: 0, // Retries failed tests up to 2 times in run mode
