@@ -43,5 +43,5 @@ jobs:
         with:
           name: cypress-videos
           path: |
-            './cypress/videos/estrellablancachatbot.cy.js.mp4'
+            '${{ github.workspace }}/cypress/videos/**/*.mp4'
           retention-days: 7          # adjust if you want to keep it longer
