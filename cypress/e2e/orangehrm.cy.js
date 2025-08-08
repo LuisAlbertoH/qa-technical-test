@@ -157,6 +157,7 @@ describe('OrangeHRM - Test de plataforma web', () => {
     cy.screenshot('7-0-OrangeHRM-Logout');
     cy.wait(20000);
     cy.screenshot('7-1-OrangeHRM-Logout');
+    cy.get('[name="username"]').should('exist');
   });
 
 });
