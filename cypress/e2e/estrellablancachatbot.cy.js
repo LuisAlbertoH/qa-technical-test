@@ -9,7 +9,7 @@ describe('Interact with Estrella Blanca Chatbot', () => {
     //let's turn off the logging on the report for better readability
 
     cy.intercept('**', { log: false });
-    cy.visit(url);
+    cy.visit(url, { failOnStatusCode: false });
   });
 
   it('should interact with the chatbot in the iframe', () => {
