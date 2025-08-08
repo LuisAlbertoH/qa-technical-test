@@ -23,6 +23,7 @@ jobs:
         with:
           spec: cypress/e2e/estrellablancachatbot.cy.js
           record: false
+          browser: chrome
         #env:
           # Cypress treats any CI env var as “CI mode” (no interactive GUI)
           #CI: true
@@ -33,7 +34,7 @@ jobs:
         with:
           name: cypress-screenshots
           path: |
-            'cypress/screenshots/estrellablancachatbot.cy.js/*'
+            './cypress/screenshots/estrellablancachatbot.cy.js/*'
           retention-days: 7
           
       - name: Upload Cypress video artifact
@@ -42,5 +43,5 @@ jobs:
         with:
           name: cypress-videos
           path: |
-            'cypress/videos/estrellablancachatbot.cy.js.mp4'
+            './cypress/videos/estrellablancachatbot.cy.js.mp4'
           retention-days: 7          # adjust if you want to keep it longer
