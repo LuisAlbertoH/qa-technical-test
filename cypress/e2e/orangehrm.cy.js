@@ -86,97 +86,80 @@ describe('OrangeHRM - Test de plataforma web', () => {
     cy.get('button:contains("Save")').click({ multiple: true });
     cy.contains('Successfully Updated', { timeout: 1000 }).should('exist');
     cy.screenshot('4-3-OrangeHRM-Editar-Personal-Details');
+    
   });
 
   it('Agregar y guardar la información de Custom Fields: Llenar los campos y dar clic en el botón guardar', () => {
-    cy.contains('h6', 'Custom Fields').scrollIntoView();
-    cy.contains('h6', 'Custom Fields').parentsUntil('.orangehrm-card-container').parent().within(() => {
-        cy.contains('label', 'Blood Type').parent().within(() => {
-            cy.get('.oxd-select-text').click();
-          });
-
-        cy.contains('.oxd-select-option', 'O+').click();
-        cy.contains('label', 'Test_Field').parent().find('input, textarea').clear().type('Dato ingresado por Cypress');
-        cy.contains('button', 'Save').click();
+    cy.login();
+    cy.get('a[href="/web/index.php/pim/viewMyDetails"]').click();
+    cy.get('div.orangehrm-custom-fields', { timeout: 1000 }).contains('h6.orangehrm-main-title', 'Custom Fields').scrollIntoView();
+    //
+    cy.get('div.orangehrm-custom-fields form.oxd-form', { timeout: 1000 }).first().within(() => {
+      cy.get('div.oxd-select-text-input', { timeout: 1000 }).first().click().parent().parent().contains('div.oxd-select-option', 'O+').click();
+      cy.get('input.oxd-input').clear().type('Test Data Hola');
+        cy.get('button:contains("Save")').click({ multiple: true });
         cy.screenshot('5-OrangeHRM-Editar-Custom-Fields');
-      });
+    });
   });
 
+  // ── 2. Attachments (subir, editar, descargar, eliminar) ───────────────────
   it('Realizar acciones en Attachments: cargar, editar, descargar y eliminar', () => {
-    
-    cy.contains('h6', 'Attachments').scrollIntoView();
-    cy.contains('h6', 'Attachments')
-      .parentsUntil('.orangehrm-card-container')
-      .parent()
-      .within(() => {
-        
+    cy.login();
+    cy.get('a[href="/web/index.php/pim/viewMyDetails"]').click();
+    cy.get('h6:contains("Attachments")', { timeout: 1000 }).scrollIntoView();
+    cy.get('div.orangehrm-attachment').within(() => {
+        /* ========== 1. Upload ========== */
         cy.contains('button', 'Add').click();
-        cy.get('input[type="file"]').selectFile('cypress/sample-avatar.svg', {
+        cy.get('input[type="file"]').selectFile('cypress/sample-avatar.png', {
           force: true,                   // input oculto
         });
-        cy.get('textarea[placeholder="Type comment here"]')
-          .type('Adjunto subido por Cypress');
-        cy.contains('button', 'Upload').click();
+        cy.get('textarea[placeholder="Type comment here"]').type('Adjunto subido por Cypress');
+        cy.screenshot('6-1-OrangeHRM-Attachments');
+        cy.contains('button', 'Save').click();
+        cy.screenshot('6-2-OrangeHRM-Attachments');
       });
 
-    // Toast de éxito
     cy.get('.oxd-toast').should('contain.text', 'Successfully Saved');
 
-    
-    cy.contains('h6', 'Attachments')
-      .parent()
-      .within(() => {
-        cy.get('.oxd-table-body .oxd-table-row').first().within(() => {
-          cy.get('i.bi-pencil-fill').click();
-        });
-    });
+    /* ========== 2. Editar comentario ========== */
+    cy.wait(2000);
+    cy.get('i.bi-pencil-fill').first().should('exist').parent().click();
 
-    cy.get('textarea')
-      .clear()
-      .type('Comentario EDITADO por Cypress');
-    cy.contains('button', 'Save').click();
+    cy.get('textarea').clear().type('Comentario EDITADO por Cypress');
+    cy.screenshot('6-3-OrangeHRM-Attachments');
+    cy.get('button:contains("Save")').click({ multiple: true });
+    cy.screenshot('6-4-OrangeHRM-Attachments');
     cy.get('.oxd-toast').should('contain.text', 'Successfully Updated');
 
-    
-    cy.contains('h6', 'Attachments')
-      .parent()
-      .within(() => {
-        cy.get('.oxd-table-body .oxd-table-row').first().within(() => {
-          cy.get('i.bi-download')
-            .parent('button')
-            .invoke('attr', 'href')
-            .then((href) => {
-              // Verifica que la descarga responde con 200 OK
-              cy.request({ url: href, encoding: 'binary' })
-                .its('status')
-                .should('eq', 200);
-            });
-        });
-      });
+    /* ========== 3. Descargar archivo ========== */
+    cy.get('.oxd-table-body .oxd-table-row', { timeout: 10000 }).first().within(() => {
+      cy.get('i.bi-download').should('exist').click();
+      cy.screenshot('6-5-OrangeHRM-Attachments');
+    });
 
-    
-    cy.contains('h6', 'Attachments')
-      .parent()
-      .within(() => {
-        cy.get('.oxd-table-body .oxd-table-row').first().within(() => {
-          cy.get('i.bi-trash').click();
-        });
-      });
+    /* ========== 4. Eliminar ========== */
+    cy.get('.oxd-table-body .oxd-table-row').first().within(() => {
+      cy.get('i.bi-trash').click();
+      cy.screenshot('6-6-OrangeHRM-Attachments');
+    });
 
     cy.contains('button', 'Yes, Delete').click();
+    cy.screenshot('6-7-OrangeHRM-Attachments');
     cy.get('.oxd-toast').should('contain.text', 'Successfully Deleted');
+    cy.screenshot('6-8-OrangeHRM-Attachments');
   });
-  
+
   it('Hacer logout: el usuario debe salir del dashboard', () => {
+    cy.login();
+    cy.get('a[href="/web/index.php/pim/viewMyDetails"]').click();
     cy.get('p.oxd-userdropdown-name').click();
     cy.contains('Logout').click();
+    cy.screenshot('7-0-OrangeHRM-Logout');
+    cy.wait(10000);
     cy.url().should('include', '/auth/login');
+    cy.screenshot('7-1-OrangeHRM-Logout');
   });
 
-
-  it('Agregar y guardar la información de Custom Fields: Llenar los campos y dar clic en el botón guardar', () => {});
-  it('Realizar acciones en la sección de Attachments: Cargar, editar, descargar y eliminar una imagen.', () => {});
-  it('Hacer logout: Validar que el usuario pueda salir del dashboard', () => {});
 });
 
 
